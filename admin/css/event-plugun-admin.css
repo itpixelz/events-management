@@ -1,0 +1,92 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+.color-success {
+    color: green;
+}
+
+.color-warn {
+    color: red;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.small-width {
+    min-width: 30%;
+}
+
+.table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.table-bordered>tbody>tr>td,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>td,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>thead>tr>th {
+    border: 1px solid #ddd;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+table td {
+    vertical-align: top;
+}
+
+.post-type-plugun-booking #minor-publishing,
+.post-type-plugun-booking #submitdiv button,
+.post-type-plugun-booking #submitdiv h2,
+.post-type-plugun-booking #delete-action {
+    display: none;
+}
+
+.input-small {
+    width: 80px;
+}
+
+.input-medium {
+    width: 150px;
+}
+
+.input-large {
+    width: 250px;
+}
+
+.input-x-large {
+    width: 350px;
+}
+
+.input-2x-large {
+    width: 600px;
+}
+
+.input-full-width {
+    width: 100%;
+}
+
+table.widefat em {
+    color: #aaa;
+}
+
+#template_params {
+    overflow: hidden;
+}

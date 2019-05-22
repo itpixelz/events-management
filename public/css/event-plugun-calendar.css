@@ -1,0 +1,69 @@
+div#event_plugun_calendar_container {
+    width: 100%;
+}
+
+.entry-content {
+    width: 100% !important;
+}
+
+.select_date {
+    width: 300px;
+}
+
+.month-left {
+    float: left;
+}
+
+.years-left {
+    float: left;
+}
+
+select#event_plugun_calendar_month1 {
+    padding: 7px;
+}
+
+select#event_plugun_calendar_year1 {
+    padding: 7px;
+}
+
+table.calendar thead tr th {
+    padding: 15px;
+    background: #ddd;
+}
+
+table.calendar tbody tr td {
+    height: 130px;
+    min-width: 130px;
+    font-size: 12px;
+    padding: 0px;
+    position: relative;
+    overflow: hidden;
+}
+
+span.day_r {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+ul.day_e {
+    list-style: none;
+    padding-left: 0px;
+    position: relative;
+    top: 23px;
+    overflow-y: scroll;
+    height: 70px;
+    width: 100%;
+}
+
+ul.day_e li {
+    padding-left: 20px;
+    line-height: 15px;
+}
+
+ul.day_e li a {
+    text-transform: capitalize;
+    font-size: 10px;
+}

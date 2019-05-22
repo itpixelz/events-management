@@ -1,0 +1,46 @@
+<?php
+
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+
+$booking = get_post($data['booking_id']);
+
+$ticket = get_post($data['ticket_id']);
+
+add_filter("event_plugun_email_subject", function ($subject, $oEmail){
+      $template = get_post(get_option("event_plugun_template_successfully_checkedin"));
+      $subject = get_post_meta($template->ID, "event_plugun_template_subject", true); //$template->post_title;
+      $event_id = get_post_meta($oEmail->template["data"]['booking_id'], "event_id", true);
+      $event = get_post($event_id);      
+      $subject = str_replace("{{event_name}}", $event->post_title, $subject);
+      return $subject ; 
+}, 10, 2);
+
+$event_id = get_post_meta($data['booking_id'], "event_id", true);
+
+$event = get_post($event_id);
+
+
+$template = get_post(get_option("event_plugun_template_successfully_checkedin"));
+
+$message = $template->post_content ;
+
+$checkin_html = '<ol>';
+
+for($i=0, $count = count($checkin_log); $i < $count; $i++){ 
+    $checkin_html .= "<li>" .  date("F d, Y H:i:s", strtotime($checkin_log[$i]["time"])) . "</li>";    
+} 
+
+$checkin_html .= "</ol>"; 
+
+$message = str_replace("{{event_name}}", $event->post_title, $message);
+$message = str_replace("{{booking_name}}", get_post_meta($data["booking_id"], "name", true), $message);
+$message = str_replace("{{ticket_name}}", $ticket->post_title, $message);
+$message = str_replace("{{checkin_log}}", $checkin_html, $message);
+$message = str_replace("{{ticket_id}}", $data['ticket_id'], $message);
+
+echo $message;
+
+
+?>

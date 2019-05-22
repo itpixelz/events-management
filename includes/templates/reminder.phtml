@@ -1,0 +1,34 @@
+<?php
+if ( ! defined( 'WPINC' ) ) {
+    die;
+}
+
+
+$template = get_post(get_option("event_plugun_template_reminder"));
+
+$message = $template->post_content;
+
+$notification_html = '<table width="100%"><tr>
+        <th style=\"border: 1px solid #ddd; padding: 5px;\"><strong>Event Name</strong></th>
+        <th style=\"border: 1px solid #ddd; padding: 5px;\"><strong>Checkin Time</strong></th>
+        <th style=\"border: 1px solid #ddd; padding: 5px;\"><strong>Days Left</strong></th>
+    </tr>';
+
+for($i=0, $count = count($notification_data); $i < $count; $i++){    
+    $ticket_html = '';
+    for($j=0, $counter = count($notification_data[$i]["tickets_info"]); $j < $counter; $j++){
+        $ticket_html .= 'Ticket: ' . $notification_data[$i]["tickets_info"][$j]->ticket_name . ",  Checkin: " . 
+                $notification_data[$i]["tickets_info"][$j]->checkin_date . " " . $notification_data[$i]["tickets_info"][$j]->checkin_time . '<br>'
+                    ;
+    }
+    $notification_html .= "<tr><td style=\"border: 1px solid #ddd; padding: 5px;\">{$notification_data[$i]['event_name']}</td>
+                <td style=\"border: 1px solid #ddd; padding: 5px;\">{$ticket_html}</td>
+                <td style=\"border: 1px solid #ddd; padding: 5px;\">{$notification_data[$i]['time_left']}</td></tr>";
+}
+
+$notification_html .= "</table>";
+
+$message = str_replace("{{event_list_table}}", $notification_html, $message);
+
+echo $message;
+

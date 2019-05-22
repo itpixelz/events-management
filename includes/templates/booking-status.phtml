@@ -1,0 +1,63 @@
+<?php
+
+if ( ! defined( 'WPINC' ) ) {
+  die;
+}
+
+
+
+$template = get_post(get_option("event_plugun_template_booking_status_changed"));
+
+$message = $template->post_content;
+
+add_filter("event_plugun_email_subject", function ($subject, $oEmail){
+      $template = get_post(get_option("event_plugun_template_booking_status_changed"));
+      $subject =  get_post_meta($template->ID, "event_plugun_template_subject", true); //$template->post_title;
+      $event_id = get_post_meta($oEmail->template['booking_id'], "event_id", true);
+      $event = get_post($event_id);      
+      $subject = str_replace("{{event_name}}", $event->post_title, $subject);
+      return $subject ; 
+}, 10, 2);
+
+$event_id = get_post_meta($booking_id, "event_id", true);
+
+$event = get_post($event_id);
+
+$tickets = get_post_meta($booking_id, "tickets", true);
+
+$ticket_html = '<table width="100%">
+                    <tr>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Price</strong></td>
+                        <td><strong>Quantity</strong></td>
+                  </tr>';
+foreach($tickets as $ticket_id => $qty){
+    $ticket = get_post($ticket_id);
+    $ticket_html .= "<tr>
+        <td  style=\"border: 1px solid #ddd; padding: 5px;\">{$ticket->post_title}</td>
+        <td style=\"border: 1px solid #ddd; padding: 5px;\">".get_post_meta($ticket_id, "ticket_price", true)."</td>
+        <td style=\"border: 1px solid #ddd; padding: 5px;\">{$qty}</td>
+    </tr>";
+}
+
+$ticket_html .= "</table>";
+
+
+$event_location = get_post_meta($event->ID, "event_location", true) . ", \n";
+$event_location .= get_post_meta($event->ID, "event_city", true) . ", \n";
+$event_location .= get_post_meta($event->ID, "event_state", true) . ", \n";
+$event_location .= get_post_meta($event->ID, "event_country", true) . ".";
+
+$message = str_replace("{{booker_name}}", get_post_meta($booking_id, "name", true), $message);
+$message = str_replace("{{booking_status}}", get_post_meta($booking_id, "booking_status", true), $message);
+$message = str_replace("{{event_name}}", $event->post_title, $message);
+
+$message = str_replace("{{event_address}}", $event_location, $message);
+$message = str_replace("{{event_date_start}}", get_post_meta($event_id, "event_date_start", true), $message);
+$message = str_replace("{{event_date_end}}", get_post_meta($event_id, "event_date_end", true), $message);
+$message = str_replace("{{booking_amount}}", get_post_meta($booking_id, "amount", true), $message);
+$message = str_replace("{{ticket_list_info}}", $ticket_html, $message);
+
+
+echo $message;
+
